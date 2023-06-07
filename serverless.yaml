@@ -1,4 +1,4 @@
-service: qb-service-biconomy-server
+service: qb-service-ipfs-server
 
 frameworkVersion: "3"
 useDotenv: true
