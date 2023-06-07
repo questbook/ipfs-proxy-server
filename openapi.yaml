@@ -1,0 +1,75 @@
+openapi: 3.0.1
+info:
+  title: Questbook IPFS server
+  version: 0.1.0
+  description: Fetch data from IPFS
+servers:
+  - url: https://api-ipfs.questbook.app
+    description: Production server
+  - url: http://localhost:3001
+    description: Local server
+paths:
+ 
+  /api/v0/cat:
+    get:
+      operationId: cat
+      summary: get the value stored of the given ipfs hash
+      tags:
+        - Cat
+      parameters:
+        - in: query
+          name: arg
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 256
+          required: true
+          description: The ipfs hash of the value to be retrieved
+      responses:
+        '400':
+          $ref: '#/components/responses/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
+
+  /api/v0/version:
+    get:
+      operationId: version
+      summary: Required by the graph ipfs node
+      tags:
+        - Version
+      responses:
+        '400':
+          $ref: '#/components/responses/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
+
+components:
+  schemas:
+    Error:
+      type: object
+      required:
+        - statusCode
+        - error
+        - message
+      properties:
+        statusCode:
+          type: integer
+          minLength: 200
+          maximum: 505
+        error:
+          type: string
+          description: Specific description of the error
+        message:
+          type: string
+          description: What the error was
+        data:
+          type: object
+          description: Some extra information about the error
+        
+  responses:
+    ErrorResponse:
+      description: Generic error response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
