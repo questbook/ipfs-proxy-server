@@ -16,7 +16,7 @@ provider:
 functions:
   api:
     handler: src/functions/api.handler
-    timeout: 30
+    timeout: 31
     reservedConcurrency: 5
     events:
       - http:
